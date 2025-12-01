@@ -31,6 +31,13 @@ function ImageUploader({ onImageUpload, disabled }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
+  // Đảm bảo mỗi khi stream thay đổi hoặc video element mount lại, srcObject luôn được gán
+  useEffect(() => {
+    if (videoRef.current && stream) {
+      videoRef.current.srcObject = stream;
+    }
+  }, [stream]);
+
   // Auto upload when file is selected
   useEffect(() => {
     if (selectedFile && tabValue === 0) {
